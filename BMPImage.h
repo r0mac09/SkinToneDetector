@@ -4,6 +4,7 @@
 
 #include <cstdio>
 #include <memory>
+
 #include "Pixels.h"
 
 #pragma pack(push, 1)
@@ -44,19 +45,23 @@ struct BMPColorHeader {
 class BMPImage {
 public:
 	BMPImage(const char* fileName_);
-	BMPImage(int32_t width, int32_t height, bool hasAlpha = true);
+	// BMPImage(int32_t width, int32_t height, bool hasAlpha = true);
+	~BMPImage();
+	BMPImage(const BMPImage &toClone) {} //REQUIERED TO IMPLEMENT
 
-	void readImage(const char* fileName);
-
-	void writeImage(const char* fileName);
+	void read();
+	void write();
+	void print();
 
 private:
 	BMPFileHeader file_header;
 	BMPInfoHeader bmp_info_header;
 	BMPColorHeader bmp_color_header;
+	bool hasAlpha;
 	FILE* imageFile;
 	char fileName[256];
-	shared_ptr<>
+	RGB8Pixel** data;
 
 	void check_color_header(BMPColorHeader &bmp_color_header);
+	void setFileName();
 };
